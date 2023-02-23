@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const AuthenticatonStack = () => {
   return (
@@ -35,33 +34,15 @@ const AuthenticatonStack = () => {
   );
 };
 
-const TabNavigator = () => {
+const MainApp = () => {
   return (
-    <Tab.Navigator
+    <Stack.Navigator
       initialRouteName="Homepage"
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarStyle: {
-          paddingVertical: 5,
-        },
-        tabBarLabelStyle:{
-          paddingBottom: 5
-        },
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Homepage") {
-            iconName = focused ? "ios-home" : "ios-home-outline";
-          } else if (route.name === "Results") {
-            iconName = focused ? "ios-list" : "ios-list-circle";
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
+      screenOptions={{ headerShown: false }}
     >
-      <Tab.Screen name="Homepage" component={HomePage} />
-      <Tab.Screen name="Results" component={ResultsScreen} />
-    </Tab.Navigator>
+      <Stack.Screen name="Homepage" component={HomePage} />
+      <Stack.Screen name="Results" component={ResultsScreen} />
+    </Stack.Navigator>
   );
 };
 
@@ -70,8 +51,8 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <TabNavigator /> : <AuthenticatonStack />}
-    </NavigationContainer>          
+      {isAuthenticated ? <MainApp /> : <AuthenticatonStack />}
+    </NavigationContainer>
   );
 };
 

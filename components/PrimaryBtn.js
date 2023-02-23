@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import colors from "../colors/colors";
 
-const DefaultBtn = (props) => {
+const PrimaryBtn = (props) => {
   const { children, onPress, style } = props;
   let ButtonComponent = TouchableOpacity;
   if (Platform.OS === "andriod" && Platform.Version >= 21) {
@@ -30,20 +30,19 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 20,
     overflow: "hidden",
-    backgroundColor: colors.cta,
   },
   button: {
+    backgroundColor: colors.secondary,
     paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     borderRadius: 20,
     alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontFamily: "semiBold",
-    fontSize: 18,
-    textTransform:'uppercase'
+    fontFamily: "regular",
+    fontSize: 16,
   },
 });
 
-export default DefaultBtn;
+export default PrimaryBtn;

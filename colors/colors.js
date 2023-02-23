@@ -1,5 +1,5 @@
 export default {
     cta: '#4E96E2',
-    primary:'#FFF',
+    primary:'#FFFFFF',
     secondary:'#1E1E1E'
 }

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     alignSelf: "center",
     fontFamily:'bold',
-    color:colors.secondary
+    color:colors.cta
   },
 });
 
