@@ -28,7 +28,6 @@ export default function App() {
           regular: require("./assets/Font/Oswald-Regular.ttf"),
           semiBold: require("./assets/Font/Oswald-SemiBold.ttf"),
         });
-        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error) {
         console.log("Error", error);
       } finally {

@@ -9,6 +9,7 @@ import {
   Text,
   Alert,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 // COLORS
 import colors from "../colors/colors";
@@ -25,6 +26,8 @@ import { useDispatch } from "react-redux";
 import { loggedInStatus, updateUserDetails } from "../store/reducer/userSlice";
 
 const Login = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,6 +37,7 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleLogin = () => {
+    setIsLoading(true);
     emailValidator();
     passwordValidator();
     if (emailIsValid && passwordIsValid) {
@@ -49,6 +53,7 @@ const Login = ({ navigation }) => {
               password: password,
             })
           );
+          setIsLoading(false);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -65,8 +70,9 @@ const Login = ({ navigation }) => {
               { text: "Okay" },
             ]);
           }
+          setIsLoading(false);
         });
-    }
+      }
   };
 
   const emailValidator = () => {
@@ -138,7 +144,11 @@ const Login = ({ navigation }) => {
             </View>
 
             <DefaultBtn style={styles.btn} onPress={handleLogin}>
-              Log in
+              {isLoading ? (
+                <ActivityIndicator color={colors.primary} />
+              ) : (
+                "Log in"
+              )}
             </DefaultBtn>
             <Text style={styles.label}>
               Don't have an account?{" "}

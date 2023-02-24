@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 // COLORS
@@ -24,6 +25,8 @@ import { useDispatch } from "react-redux";
 import { loggedInStatus, updateUserDetails } from "../store/reducer/userSlice";
 
 const Signup = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +48,10 @@ const Signup = ({ navigation }) => {
   };
 
   const emailValidator = () => {
-    if (email.trim().length > 0) {
+    const emailRegex = email.search(
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    );
+    if (emailRegex >= 0) {
       setEmailIsValid(true);
     } else {
       setEmailIsValid(false);
@@ -73,6 +79,7 @@ const Signup = ({ navigation }) => {
   const handleSignup = () => {
     emailValidator();
     passwordValidator();
+    setIsLoading(true);
     if (emailIsValid && passwordIsValid) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
@@ -88,10 +95,12 @@ const Signup = ({ navigation }) => {
                   password: password,
                 })
               );
+              setIsLoading(false);
             }
           );
         })
         .catch((error) => {
+          setIsLoading(false);
           const errorCode = error.code;
           if (errorCode === "auth/invalid-email") {
             Alert.alert(`Invalid email`, `Check your email input`, [
@@ -197,8 +206,13 @@ const Signup = ({ navigation }) => {
             </View>
 
             <DefaultBtn style={styles.btn} onPress={handleSignup}>
-              Sign up
+              {isLoading ? (
+                <ActivityIndicator color={colors.primary} />
+              ) : (
+                "Sign up"
+              )}
             </DefaultBtn>
+
             <Text style={styles.label}>
               Already have an account?{" "}
               <Text
